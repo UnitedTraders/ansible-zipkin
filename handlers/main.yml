@@ -1,0 +1,12 @@
+---
+# handlers file for ansible-zipkin
+- name: restart zipkin
+  service: name=zipkin state=restarted
+
+- name: rebuild zipkin
+  command: /usr/bin/docker-compose build chdir={{ zipkin_home }}
+  notify: restart zipkin
+
+- name: reload systemd units
+  command: systemctl daemon-reload
+  notify: restart zipkin
