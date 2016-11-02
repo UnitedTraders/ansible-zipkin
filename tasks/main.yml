@@ -5,7 +5,7 @@
 
 - name: create zipkin data dirs
   file: state=directory path={{ item }} owner={{ zipkin_user }} recurse=true
-  with_items: 
+  with_items:
     - "{{ zipkin_home }}/data/mysql"
     - "{{ zipkin_home }}/data/initmysql"
 
@@ -13,7 +13,7 @@
   get_url:
     url: "https://raw.githubusercontent.com/openzipkin/zipkin/{{ zipkin_version }}/zipkin-storage/mysql/src/main/resources/mysql.sql"
     dest: "{{ zipkin_home }}/data/initmysql/zipkin.schema"
-    owner: "{{ zipkin_user }}" 
+    owner: "{{ zipkin_user }}"
 
 - name: copy zipkin db init script
   copy: dest={{ zipkin_home }}/data/initmysql/install.sh  owner={{ zipkin_user }} src=install.sh
